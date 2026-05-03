@@ -26,9 +26,10 @@ import androidx.room.PrimaryKey
  * Additionally, an ID is needed as a unique identifier for
  * each row in the database.
  */
-@Entity(tableName = "Schedule")
+@Entity(tableName = "Schedule") // convert to BusSchedule item Entity data class
+// Entity class defines table, each instance is a row in DB
 data class BusSchedule(
-    @PrimaryKey
+    @PrimaryKey // id annotated with primary key
     val id: Int,
     @NonNull
     @ColumnInfo(name = "stop_name")

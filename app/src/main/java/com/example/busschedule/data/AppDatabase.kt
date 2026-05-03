@@ -20,17 +20,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+// database that uses BusSchedule dataclass (entities) in table Schedule
 @Database(entities = arrayOf(BusSchedule::class), version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() { // extends RoomDatabase
     abstract fun busScheduleDao(): BusScheduleDao
 
-    companion object {
+    companion object { // allows access to methods to create/get db
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null // keeps SINGLE reference of database
+        // opened at a given time
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-                Room.databaseBuilder(
+                Room.databaseBuilder( // to get database and passing the following
                     context,
                     AppDatabase::class.java,
                     "app_database"

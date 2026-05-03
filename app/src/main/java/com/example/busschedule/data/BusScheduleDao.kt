@@ -23,16 +23,19 @@ import kotlinx.coroutines.flow.Flow
  * Provides access to read/write operations on the schedule table.
  * Used by the view models to format the query results for use in the UI.
  */
-@Dao
+@Dao // create Data Access Object DAO, interface that separates database operations of
+// insert, delete, update, and query
 interface BusScheduleDao {
+    // getAll function will query to get all from schedule table, and order by arrival_time
     @Query(
         """
         SELECT * FROM schedule 
-        ORDER BY arrival_time ASC    
+        ORDER BY arrival_time ASC
         """
     )
     fun getAll(): Flow<List<BusSchedule>>
 
+    // getByStopName will query the specified stopName to retrieve its arrival times ascending
     @Query(
         """
         SELECT * FROM schedule 

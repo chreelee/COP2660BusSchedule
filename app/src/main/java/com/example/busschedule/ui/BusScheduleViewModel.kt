@@ -29,16 +29,19 @@ import kotlinx.coroutines.flow.Flow
  * View model for Bus Schedule
  * contains methods to access Room DB through [busScheduleDao]
  */
+// implements BusScheduleDao into view model
 class BusScheduleViewModel(private val busScheduleDao: BusScheduleDao): ViewModel() {
     // Get full bus schedule from Room DB
     fun getFullSchedule(): Flow<List<BusSchedule>> = busScheduleDao.getAll()
     // Get bus schedule based on the stop name from Room DB
+    // getAll in BusScheduleDao
     fun getScheduleFor(stopName: String): Flow<List<BusSchedule>> =
         busScheduleDao.getByStopName(stopName)
+    // getByStopName in BusScheduleDao
 
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
-            initializer {
+            initializer { // pass in repository instance as parameter
                 val application = (this[APPLICATION_KEY] as BusScheduleApplication)
                 BusScheduleViewModel(application.database.busScheduleDao())
             }
